@@ -18,10 +18,31 @@ class Controller
         exit;
     }
 
-    protected function view($path)
+    protected function view($path, $variables = false)
     {
-        if (file_exists(_DIR_VIEWS_ . $path . '.html')) include _DIR_VIEWS_ . $path . '.html';
-        else if (file_exists(_DIR_VIEWS_ . $path . '.php')) include _DIR_VIEWS_ . $path . '.php';
-        else die('View nao encontrada');
+        $extensions = ['html', 'php'];
+        $file = null;
+
+        foreach ($extensions as $ext) {
+            $file_name = _DIR_VIEWS_ . $path . '.' . $ext;
+            if (file_exists($file_name)) {
+                $file = $file_name;
+                break;
+            }
+        }
+
+        if (!$file) {
+            die('View nao encontrada');
+        } else {
+            $content = file_get_contents($file);
+
+            if (is_array($variables)) {
+                foreach ($variables as $k => $v) {
+                    $content = str_replace('[[:' . $k . ']]', $v, $content);
+                }
+            }
+
+            echo $content;
+        }
     }
 }

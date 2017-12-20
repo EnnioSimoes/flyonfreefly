@@ -6,4 +6,14 @@ class LoginHelper
     {
         return isset($_SESSION['login']);
     }
+
+    public function login($data)
+    {
+        $_SESSION['login'] = $data;
+    }
+
+    public function logout()
+    {
+        session_destroy();
+    }
 }

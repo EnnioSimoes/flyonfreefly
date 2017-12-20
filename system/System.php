@@ -26,6 +26,8 @@ class System
 
 		if ($config['user_server_path']) {
 			$this->url = isset($_SERVER['REQUEST_URI']) ? trim($_SERVER['REQUEST_URI']) : '';
+			$this->url = explode('?', $this->url);
+			$this->url = $this->url[0];
 		} else {
 			$this->url = isset($_GET['url']) ? trim($_GET['url']) : '';
 		}
@@ -106,6 +108,8 @@ class System
 
 	public function run()
 	{
+		// printa($this);
+		// die();
 		$controller_directory = _DIR_CONTROLLERS_;
 		$controller_file = $controller_directory . $this->final_controller . '.php';
 
