@@ -16,4 +16,9 @@ class LoginHelper
     {
         session_destroy();
     }
+
+    public function getData()
+    {
+        return $_SESSION['login'];
+    }
 }
